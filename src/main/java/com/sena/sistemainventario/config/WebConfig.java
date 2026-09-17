@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthInterceptor())
-                .addPathPatterns("/productos/**", "/exportar/**")
+                .addPathPatterns("/productos/**", "/exportar-pdf", "/exportar-excel")
                 .excludePathPatterns("/api/login", "/api/registro", "/api/sesion",
                         "/api/logout", "/css/**", "/js/**", "/img/**");
     }

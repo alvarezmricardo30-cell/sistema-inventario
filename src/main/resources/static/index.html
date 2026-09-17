@@ -209,8 +209,10 @@
           <p class="text-muted mb-0">Consulta en tiempo real sincronizada con la base de datos MySQL</p>
         </div>
         <div class="d-flex gap-2">
+          <button class="btn btn-outline-danger" onclick="exportarPDF()"><i class="bi bi-file-earmark-pdf me-1"></i> PDF</button>
+          <button class="btn btn-outline-success" onclick="exportarExcel()"><i class="bi bi-file-earmark-excel me-1"></i> Excel</button>
           <button class="btn btn-outline-primary" onclick="cargarProductos()"><i class="bi bi-arrow-clockwise me-1"></i> Actualizar</button>
-          <button class="btn btn-success" onclick="mostrarSeccion('registrar')"><i class="bi bi-plus-circle me-1"></i> Registrar Producto</button>
+          <button class="btn btn-success" onclick="mostrarSeccion('registrar')"><i class="bi bi-plus-circle me-1"></i> Registrar</button>
         </div>
       </div>
 
@@ -220,7 +222,7 @@
             <div class="col-12 col-md-7">
               <div class="input-group">
                 <span class="input-group-text bg-light text-primary"><i class="bi bi-search"></i></span>
-                <input type="text" class="form-control" id="buscarProducto" placeholder="Buscar por codigo, nombre o proveedor..." oninput="buscarEnTiempoReal()">
+                <input type="text" class="form-control" id="buscarProducto" placeholder="Buscar por ID, codigo, nombre o proveedor..." oninput="buscarEnTiempoReal()">
               </div>
             </div>
             <div class="col-12 col-md-5">

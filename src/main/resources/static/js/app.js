@@ -29,7 +29,8 @@ function mostrarSeccion(seccion) {
 
 async function cargarProductos() {
     try {
-        const respuesta = await fetch(API_URL);
+        const respuesta = await fetch(API_URL, { credentials: 'include' });
+        if (respuesta.status === 401) { window.location.href = '/login.html'; return; }
         productos = await respuesta.json();
         mostrarProductosEnTabla(productos);
         actualizarResumen();
@@ -46,6 +47,7 @@ function mostrarProductosEnTabla(listaProductos) {
 
     if (listaProductos.length === 0) {
         tabla.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-muted">No se encontraron productos</td></tr>';
+        document.getElementById("totalGeneral").textContent = "$0";
         return;
     }
 
@@ -117,6 +119,7 @@ function buscarEnTiempoReal() {
 
     if (texto) {
         filtrados = filtrados.filter(p =>
+            String(p.id).includes(texto) ||
             p.codigo.toLowerCase().includes(texto) ||
             p.nombre.toLowerCase().includes(texto) ||
             (p.proveedor && p.proveedor.toLowerCase().includes(texto))
@@ -156,12 +159,14 @@ if (formProducto) {
                 respuesta = await fetch(API_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
+                    credentials: 'include',
                     body: JSON.stringify(producto)
                 });
             } else {
                 respuesta = await fetch(API_URL + "/" + idEditando, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
+                    credentials: 'include',
                     body: JSON.stringify(producto)
                 });
             }
@@ -185,9 +190,13 @@ if (formProducto) {
 }
 
 function editarProducto(id) {
-    fetch(API_URL + "/" + id)
-        .then(r => r.json())
+    fetch(API_URL + "/" + id, { credentials: 'include' })
+        .then(r => {
+            if (r.status === 401) { window.location.href = '/login.html'; return null; }
+            return r.json();
+        })
         .then(producto => {
+            if (!producto) return;
             document.getElementById("codigo").value = producto.codigo;
             document.getElementById("nombre").value = producto.nombre;
             document.getElementById("categoria").value = producto.categoria;
@@ -225,7 +234,7 @@ async function eliminarProducto(id) {
     if (!confirm("Esta seguro de eliminar este producto?")) return;
 
     try {
-        const respuesta = await fetch(API_URL + "/" + id, { method: "DELETE" });
+        const respuesta = await fetch(API_URL + "/" + id, { method: "DELETE", credentials: 'include' });
         if (respuesta.ok) {
             mostrarMensaje("Producto eliminado correctamente", "success");
             cargarProductos();
@@ -236,6 +245,18 @@ async function eliminarProducto(id) {
         console.error("Error:", error);
         mostrarMensaje("No se pudo conectar con el servidor", "danger");
     }
+}
+
+/* ============================================================
+   EXPORTAR PDF / EXCEL
+   ============================================================ */
+
+function exportarPDF() {
+    window.open('/exportar-pdf', '_blank');
+}
+
+function exportarExcel() {
+    window.open('/exportar-excel', '_blank');
 }
 
 /* ============================================================

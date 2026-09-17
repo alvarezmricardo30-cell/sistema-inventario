@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema Web de Inventario | Registrar producto</title>
+  <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">Inventario</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+              data-bs-target="#menuNavegacion" aria-controls="menuNavegacion"
+              aria-expanded="false" aria-label="Abrir menu de navegacion">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="menuNavegacion">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="registrar.html">Ingresar</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="productos.html">Productos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="contactos.html">Contacto</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header class="text-center">
+    <h1>Sistema Web de Inventario</h1>
+    <p>Gestion y control de productos</p>
+    <p>Aprendiz: Ricardo Andres Alvarez Molina &mdash; Ficha: 3233929</p>
+    <p>Tecnologo en Analisis y Desarrollo de Software &mdash; Proyecto: Sistema Web de Inventario</p>
+    <p class="mt-3 mb-0">
+      <a class="btn btn-warning" href="index.html">&laquo; Volver al menu de inicio</a>
+    </p>
+  </header>
+
+  <main class="container my-5">
+
+    <section>
+      <h2 class="mb-4" id="tituloForm">Registrar producto</h2>
+
+      <form id="formProducto">
+
+        <div class="mb-3">
+          <label for="codigo" class="form-label">Codigo</label>
+          <input type="text" id="codigo" class="form-control" placeholder="Ejemplo: P001" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="nombre" class="form-label">Nombre</label>
+          <input type="text" id="nombre" class="form-control" placeholder="Ejemplo: Teclado" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="categoria" class="form-label">Categoria</label>
+          <select id="categoria" class="form-select" required>
+            <option value="">Seleccione una categoria</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Accesorios">Accesorios</option>
+            <option value="Electrodomesticos">Electrodomesticos</option>
+            <option value="Muebles">Muebles</option>
+            <option value="Papeleria">Papeleria</option>
+            <option value="Herramientas">Herramientas</option>
+            <option value="Otros">Otros</option>
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label for="precio" class="form-label">Precio</label>
+          <input type="number" id="precio" class="form-control" placeholder="Ejemplo: 120000" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="cantidad" class="form-label">Cantidad</label>
+          <input type="number" id="cantidad" class="form-control" placeholder="Ejemplo: 10" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary" id="btnFormulario">
+          Registrar producto
+        </button>
+
+      </form>
+    </section>
+
+  </main>
+
+  <footer class="text-center">
+    <p class="mb-1">Sistema Web de Inventario</p>
+    <p class="mb-1">Tecnologo en Analisis y Desarrollo de Software</p>
+    <p class="mb-0">2026</p>
+  </footer>
+
+  <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

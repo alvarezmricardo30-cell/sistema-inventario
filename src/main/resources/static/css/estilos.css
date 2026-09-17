@@ -1,0 +1,108 @@
+/* ============================================================
+   estilos.css — Sistema de Inventario SENA
+   ============================================================ */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Header Gradient */
+.header-gradient {
+  background: linear-gradient(135deg, #1a237e 0%, #0d47a1 50%, #01579b 100%);
+}
+
+/* Secciones SPA */
+.seccion-vista {
+  display: none;
+}
+
+.seccion-vista.activa {
+  display: block;
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Tarjetas de estadisticas */
+.stat-card {
+  border: none;
+  border-radius: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+}
+
+.tarjeta-info.success .card-body { border-left: 4px solid #198754; }
+.tarjeta-info.danger .card-body { border-left: 4px solid #dc3545; }
+.tarjeta-info.warning .card-body { border-left: 4px solid #ffc107; }
+.tarjeta-info .card-body { border-left: 4px solid #0d6efd; }
+
+/* Tarjetas de acceso rapido */
+.quick-access-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.quick-access-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2) !important;
+}
+
+/* Navbar */
+.navbar-brand {
+  font-size: 1.3rem;
+}
+
+/* Tablas */
+.table thead th {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+/* Badges de estado */
+.badge {
+  font-weight: 500;
+  padding: 0.5em 0.8em;
+}
+
+/* Footer */
+footer {
+  background-color: #1a1a2e !important;
+}
+
+/* Formularios */
+.form-control:focus,
+.form-select:focus {
+  border-color: #0d6efd;
+  box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .header-gradient h1 {
+    font-size: 1.8rem;
+  }
+
+  .stat-card .card-body h2 {
+    font-size: 1.5rem;
+  }
+
+  .quick-access-card .card-body {
+    padding: 1.5rem !important;
+  }
+}

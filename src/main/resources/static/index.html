@@ -10,6 +10,15 @@
 </head>
 <body class="bg-light d-flex flex-column min-vh-100">
 
+  <div id="cargandoSesion" class="d-flex flex-column align-items-center justify-content-center" style="min-height:100vh;">
+    <div class="spinner-border text-primary mb-3" role="status" style="width:3rem;height:3rem;"></div>
+    <h5 class="text-muted">Verificando sesion...</h5>
+  </div>
+
+  <style>
+    #cargandoSesion ~ nav, #cargandoSesion ~ header, #cargandoSesion ~ main, #cargandoSesion ~ footer { display: none; }
+  </style>
+
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top shadow-sm">
     <div class="container">
       <a class="navbar-brand d-flex align-items-center gap-2 fw-bold text-success" href="javascript:void(0)" onclick="mostrarSeccion('inicio')">
@@ -361,6 +370,11 @@
         }
         document.getElementById('usuarioNombre').textContent = data.nombre;
         document.getElementById('usuarioRol').textContent = data.rol;
+        document.getElementById('cargandoSesion').style.display = 'none';
+        document.querySelector('nav').style.display = '';
+        document.querySelector('header').style.display = '';
+        document.querySelector('main').style.display = '';
+        document.querySelector('footer').style.display = '';
       } catch (err) {
         window.location.href = '/login.html';
       }

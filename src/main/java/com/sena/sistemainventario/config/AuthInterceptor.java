@@ -26,7 +26,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             response.setContentType("application/json");
             response.getWriter().write("{\"error\":\"No autenticado\"}");
         } else {
-            response.sendRedirect("/index.html");
+            response.sendRedirect("/login.html");
         }
         return false;
     }

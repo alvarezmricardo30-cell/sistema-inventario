@@ -2,10 +2,10 @@ FROM eclipse-temurin:21-jdk AS build
 WORKDIR /app
 COPY pom.xml .
 COPY src ./src
-RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests
+RUN apt-get update && apt-get install -y maven && mvn clean package -DskipTests -Dspring-boot.build-image.skip=true
 
 FROM eclipse-temurin:21-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/sistema-inventario-*.jar app.jar
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+CMD ["java", "-jar", "-Dserver.port=8080", "app.jar"]

@@ -6,13 +6,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.sena.sistemainventario.model.Producto;
+import com.sena.sistemainventario.model.Usuario;
 import com.sena.sistemainventario.repository.ProductoRepository;
+import com.sena.sistemainventario.repository.UsuarioRepository;
 
 @SpringBootApplication
 public class SistemaInventarioApplication implements CommandLineRunner {
 
     @Autowired
     private ProductoRepository repository;
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     public static void main(String[] args) {
         SpringApplication.run(SistemaInventarioApplication.class, args);
@@ -25,6 +30,17 @@ public class SistemaInventarioApplication implements CommandLineRunner {
         System.out.println("  SISTEMA DE INVENTARIO - VERIFICACION");
         System.out.println("========================================");
         System.out.println();
+
+        if (usuarioRepository.count() == 0) {
+            System.out.println("Creando usuario admin por defecto...");
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest("1234".getBytes());
+            String hashed = java.util.Base64.getEncoder().encodeToString(hash);
+            Usuario admin = new Usuario("admin", hashed, "Administrador", "admin@sena.com");
+            admin.setRol("ADMIN");
+            usuarioRepository.save(admin);
+            System.out.println("Usuario admin creado (usuario: admin, contrasena: 1234)");
+        }
 
         if (repository.count() == 0) {
             System.out.println("Base de datos vacia - cargando datos demo...");

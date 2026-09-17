@@ -19,7 +19,7 @@ function mostrarSeccion(seccion) {
     document.getElementById('nav-' + seccion).classList.add('active');
 
     if (seccion === 'productos') {
-        cargarProductos();
+        mostrarProductosEnTabla(productos);
     }
 }
 
@@ -47,7 +47,8 @@ function mostrarProductosEnTabla(listaProductos) {
 
     if (listaProductos.length === 0) {
         tabla.innerHTML = '<tr><td colspan="9" class="text-center py-4 text-muted">No se encontraron productos</td></tr>';
-        document.getElementById("totalGeneral").textContent = "$0";
+        const tg = document.getElementById("totalGeneral");
+        if (tg) tg.textContent = "$0";
         return;
     }
 
@@ -82,7 +83,8 @@ function mostrarProductosEnTabla(listaProductos) {
         `;
     });
 
-    document.getElementById("totalGeneral").textContent = "$" + totalGeneral.toLocaleString();
+    const tg = document.getElementById("totalGeneral");
+    if (tg) tg.textContent = "$" + totalGeneral.toLocaleString();
 }
 
 /* ============================================================
@@ -178,7 +180,8 @@ if (formProducto) {
                 formProducto.reset();
                 idEditando = null;
                 restablecerFormulario();
-                setTimeout(() => mostrarSeccion('productos'), 1500);
+                await cargarProductos();
+                setTimeout(() => mostrarSeccion('productos'), 1000);
             } else {
                 mostrarMensaje("No fue posible guardar el producto", "danger");
             }
@@ -237,7 +240,7 @@ async function eliminarProducto(id) {
         const respuesta = await fetch(API_URL + "/" + id, { method: "DELETE", credentials: 'include' });
         if (respuesta.ok) {
             mostrarMensaje("Producto eliminado correctamente", "success");
-            cargarProductos();
+            await cargarProductos();
         } else {
             mostrarMensaje("No fue posible eliminar el producto", "danger");
         }
@@ -248,15 +251,43 @@ async function eliminarProducto(id) {
 }
 
 /* ============================================================
-   EXPORTAR PDF / EXCEL
+   EXPORTAR PDF / EXCEL (con cookie de sesion)
    ============================================================ */
 
-function exportarPDF() {
-    window.open('/exportar-pdf', '_blank');
+async function exportarPDF() {
+    try {
+        const resp = await fetch('/exportar-pdf', { credentials: 'include' });
+        if (resp.status === 401) { window.location.href = '/login.html'; return; }
+        const blob = await resp.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'reporte_productos.pdf';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    } catch (e) {
+        alert('Error al descargar PDF');
+    }
 }
 
-function exportarExcel() {
-    window.open('/exportar-excel', '_blank');
+async function exportarExcel() {
+    try {
+        const resp = await fetch('/exportar-excel', { credentials: 'include' });
+        if (resp.status === 401) { window.location.href = '/login.html'; return; }
+        const blob = await resp.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'productos.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    } catch (e) {
+        alert('Error al descargar Excel');
+    }
 }
 
 /* ============================================================
@@ -275,9 +306,3 @@ function mostrarMensaje(texto, tipo) {
     `;
     setTimeout(() => { mensajeDiv.innerHTML = ''; }, 4000);
 }
-
-/* ============================================================
-   INICIALIZAR
-   ============================================================ */
-
-cargarProductos();

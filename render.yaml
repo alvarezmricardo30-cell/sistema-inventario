@@ -4,4 +4,11 @@ services:
     runtime: docker
     dockerfilePath: Dockerfile
     plan: free
-    healthCheckPath: /
+    healthCheckPath: /api/sesion
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:h2:mem:sistema_inventario
+      - key: SPRING_DATASOURCE_USERNAME
+        value: sa
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: ""
